@@ -33,30 +33,30 @@
  				<% if current_user.following?(user) %>
                   <li>
 
-                    <%= link_to "フォロー外す(link)", current_user.following_relationships.find_by(following_id: user.id), method: :delete %>
+                    <%= link_to 'フォロー外す(link)', relationship_path(user.id), method: :delete %>
 
-                    <%= form_for(current_user.following_relationships.find_by(following_id: user.id),html: { method: :delete }) do |f| %>
-                      <%= f.hidden_field :following_id %>
+                    <%= form_for( current_user.following_relationships.build,url: relationship_path(user.id),method: :delete) do |f| %>
+                      <%= hidden_field_tag :id ,user.id %>
                       <%= f.submit "フォロー外す(for)", class: "btn btn-large" %>
                     <% end %>
 
-                    <%= form_with(model: current_user.following_relationships.find_by(following_id: user.id),method: :delete) do |f| %>
-                      <%= f.hidden_field :following_id %>
+                    <%= form_with(url: relationship_path(user.id),method: :delete) do |f| %>
+                      <%= hidden_field_tag :id, user.id %>
                       <%= f.submit "フォロー外す(with)", class: "btn btn-outline-secondary" %>
                     <% end %>
 
                   </li>
                 <% else %>
                   <li>
-                  	<%= link_to "フォローする(link)",current_user.following_relationships.build(following_id: user.id), method: :post %>
+                    <%= link_to 'フォローする(link)', relationships_path(following_id: user.id), method: :POST %>
 
-                  	<%= form_for(current_user.following_relationships.build(following_id: user.id)) do |f| %>
-                  	  <div><%= f.hidden_field :following_id %></div>
+                  	<%= form_for( current_user.following_relationships.build, url: relationships_path) do |f| %>
+                  	  <div><%= hidden_field_tag :following_id ,user.id %></div>
                   	  <%= f.submit "フォローする(for)", class: "btn btn-large btn-primary" %>
                     <% end %>
 
-                    <%= form_with(model: current_user.following_relationships.build) do |f| %>
-                      <%= f.hidden_field :following_id, value: user.id %>
+                    <%= form_with(url: relationships_path) do |f| %>
+                      <%= hidden_field_tag :following_id ,user.id %>
                       <%= f.submit "フォローする(with)", class: "btn btn-outline-secondary" %>
                     <% end %>
 

@@ -31,15 +31,15 @@
 <div class="row">
 	<% unless current_user == user %>
 	  <% if current_user.following?(user) %>
-	　　<%= form_with(model: current_user.following_relationships.find_by(following_id: user.id),method: :delete) do |f| %>
-          <%= f.hidden_field :following_id %>
-          <%= f.submit "フォロー外す(with)", class: "btn btn-primary" %>
+	    <%= form_with(url: relationship_path(user.id),method: :delete) do |f| %>
+            <%= hidden_field_tag :id, user.id %>
+            <%= f.submit "フォロー外す(with)", class: "btn btn-primary" %>
         <% end %>
       <% else %>
-        <%= form_with(model: current_user.following_relationships.build) do |f| %>
-          <%= f.hidden_field :following_id, value: user.id %>
-          <%= f.submit "フォローする(with)", class: "btn btn-success" %>
-        <% end %>
+      <%= form_with(url: relationships_path) do |f| %>
+        <%= hidden_field_tag :following_id ,user.id %>
+        <%= f.submit "フォローする(with)", class: "btn btn-success" %>
+      <% end %>
       <% end %>
     <% else %>
 	  <%= link_to '', edit_user_path(user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{user.id}" %>

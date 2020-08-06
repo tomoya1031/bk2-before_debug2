@@ -1,5 +1,6 @@
 <h2>Follower Users</h2>
-<table class="table table-hover table-inverse">
+<% if @users.count > 0 %>
+  <table class="table table-hover table-inverse">
 	<thead>
 		<tr>
 			<th>image</th>
@@ -20,4 +21,7 @@
 		    </tr>
 		<% end %>
 	</tbody>
-</table>
+  </table>
+<% else %>
+  <p>ユーザーはいません</p>
+<% end %>
